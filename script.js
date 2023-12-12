@@ -107,6 +107,8 @@ function endGame() {
 function playPause(e) {
   if (e.key.toLowerCase() !== 'p') return;
 
+  if (isGameOver) return;
+
   const { body } = document;
   const pauseText = document.getElementById('pause');
   if (isPaused) {
