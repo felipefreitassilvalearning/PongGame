@@ -9,7 +9,9 @@ const scoreIncrement = 2;
 let scoreDecrement = 1;
 let activeStick = "left";
 
-window.onload = () => { setHighestScore(); }
+window.onload = () => {
+  setHighestScore();
+}
 
 /**
  * This function gets the highest score from the local storage and displays it
@@ -300,10 +302,8 @@ function moveSticks(e) {
   if (stick === null) return;
 
   stick.style.outline = 'none';
-  stick.style.padding = '0';
   if (stick.id.startsWith(activeStick)) {
-    stick.style.outline = '1px solid #ccc';
-    stick.style.padding = '2px';
+    stick.style.outline = '2px solid red';
   }
   moveStick(stick, y);
 }
