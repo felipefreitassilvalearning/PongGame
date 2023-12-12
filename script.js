@@ -7,6 +7,7 @@ const minDistance = 0.1;
 const maxDistance = 6;
 const scoreIncrement = 2;
 let scoreDecrement = 1;
+let activeStick = "left";
 
 window.onload = () => { setHighestScore(); }
 
@@ -261,9 +262,11 @@ function moveDot() {
  */
 function getStick(x) {
   if (x < window.innerWidth / 2) {
+    if (activeStick === "right") activeStick = "left";
     const leftStick = document.getElementById('leftStick');
     return leftStick;
   }
+  if (activeStick === "left") activeStick = "right";
   const rightStick = document.getElementById('rightStick');
   return rightStick;
 }
@@ -276,9 +279,6 @@ function getStick(x) {
  */
 function moveStick(stick, y) {
   if (stick === null) return;
-
-  stick.style.outline = '1px solid #999999';
-  stick.style.padding = '2px';
 
   const stickHeight = stick.offsetHeight;
 
@@ -298,11 +298,12 @@ function moveSticks(e) {
   
   const stick = getStick(x);
   if (stick === null) return;
-  
-  moveStick(stick, y);
 
-  stick.style.outline = 'none';
-  stick.style.padding = '0';
+  if (stick.id.startsWith(activeStick)) {
+    stick.style.outline = '1px solid #ccc';
+    stick.style.padding = '2px';
+  }
+  moveStick(stick, y);
 }
 
 document.addEventListener('mousemove', moveSticks)
