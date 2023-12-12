@@ -210,17 +210,21 @@ function moveDot() {
     const tooFarBottom = dotY + dot.offsetHeight >= window.innerHeight;
 
     if (tooFarLeft || tooFarRight) {
+      score.innerText = scoreValue - scoreDecrement;
       if (scoreValue - scoreDecrement < 0) {
         endGame();
         return;
       }
+      scoreDecrement += 1;
 
       if (distance > minDistance) {
         distance -= 0.1;
       }
 
-      score.innerText = scoreValue - scoreDecrement;
-      scoreDecrement += 1;
+      const stickHeight = stick.offsetHeight;
+      if (stickHeight < 100) {
+        stick.style.height = stickHeight * 1.1 + 'px';
+      }
     }
 
     if (tooFarLeft) {
