@@ -186,10 +186,6 @@ function moveDot() {
 
   const [collides, stick] = collidesWithStick(dotX, dotY);
   if (stick === null) return;
-  if (stick.id.startsWith(activeStick)) {
-    stick.style.outline = '2px solid red';
-  }
-
   let [vertical, horizontal] = getDirections(dot);
   if (collides) {
     score.innerText = scoreValue + scoreIncrement;
@@ -269,21 +265,14 @@ function moveDot() {
  * @returns {HTMLElement | null} The stick that is on the side of the mouse
  */
 function getStick(x) {
-  const leftStick = document.getElementById('leftStick');
-  const rightStick = document.getElementById('rightStick');
-  
-  if (activeStick === "left") {
-    rightStick.style.outline = 'none';
-  } else if (activeStick === "right") {
-    leftStick.style.outline = 'none';
-  }
-  
   if (x < window.innerWidth / 2) {
     activeStick = "left";
+    const leftStick = document.getElementById('leftStick');
     return leftStick;
   }
   
   activeStick = "right";
+  const rightStick = document.getElementById('rightStick');
   return rightStick;
 }
 
@@ -311,9 +300,22 @@ function moveStick(stick, y) {
 function moveSticks(e) {
   const x = e.clientX;
   const y = e.clientY;
+
+  const leftStick = document.getElementById('leftStick');
+  const rightStick = document.getElementById('rightStick');
+  
+  if (activeStick === "left") {
+    rightStick.style.outline = 'none';
+  } else if (activeStick === "right") {
+    leftStick.style.outline = 'none';
+  }
   
   const stick = getStick(x);
   if (stick === null) return;
+
+  if (stick.id.startsWith(activeStick)) {
+    stick.style.outline = '2px solid red';
+  }
 
   moveStick(stick, y);
 }
