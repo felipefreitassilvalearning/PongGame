@@ -184,9 +184,14 @@ function moveDot() {
   const dotY = dot.offsetTop;
 
   const [collides, stick] = collidesWithStick(dotX, dotY);
+  if (stick === null) return;
+  stick.style.outline = 'none';
   let [vertical, horizontal] = getDirections(dot);
   if (collides) {
-    if (stick === null) return;
+    if (stick.id.startsWith(activeStick)) {
+      stick.style.outline = '2px solid green';
+    }
+    
     score.innerText = scoreValue + scoreIncrement;
     if (scoreValue + scoreIncrement > highestScore) {
       highestScore = scoreValue + scoreIncrement;
@@ -207,6 +212,10 @@ function moveDot() {
       stick.style.height = stickHeight * 0.9 + 'px';
     }
   } else {
+    if (stick.id.startsWith(activeStick)) {
+      stick.style.outline = '2px solid red';
+    }
+
     const tooFarLeft = dotX <= 0;
     const tooFarRight = dotX + dot.offsetWidth >= window.innerWidth;
     const tooFarTop = dotY <= 0;
@@ -301,10 +310,6 @@ function moveSticks(e) {
   const stick = getStick(x);
   if (stick === null) return;
 
-  stick.style.outline = 'none';
-  if (stick.id.startsWith(activeStick)) {
-    stick.style.outline = '2px solid red';
-  }
   moveStick(stick, y);
 }
 
