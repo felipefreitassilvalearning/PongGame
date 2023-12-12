@@ -267,13 +267,13 @@ function moveDot() {
 function getStick(x) {
   if (x < window.innerWidth / 2) {
     activeStick = "left";
-    const leftStick = document.getElementById('leftStick');
-    return leftStick;
+  } else {
+    activeStick = "right";
   }
-  
-  activeStick = "right";
-  const rightStick = document.getElementById('rightStick');
-  return rightStick;
+
+  const stickId = `${activeStick}Stick`
+  const stick = document.getElementById(stickId);
+  return stick;
 }
 
 /**
@@ -300,22 +300,15 @@ function moveStick(stick, y) {
 function moveSticks(e) {
   const x = e.clientX;
   const y = e.clientY;
-
-  const leftStick = document.getElementById('leftStick');
-  const rightStick = document.getElementById('rightStick');
-  
-  if (activeStick === "left") {
-    rightStick.style.outline = 'none';
-  } else if (activeStick === "right") {
-    leftStick.style.outline = 'none';
-  }
   
   const stick = getStick(x);
   if (stick === null) return;
 
-  if (stick.id.startsWith(activeStick)) {
-    stick.style.outline = '2px solid red';
-  }
+  const leftStick = document.getElementById('leftStick');
+  const rightStick = document.getElementById('rightStick');
+  rightStick.style.outline = 'none';
+  leftStick.style.outline = 'none';
+  stick.style.outline = '2px solid red';
 
   moveStick(stick, y);
 }
