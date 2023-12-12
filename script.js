@@ -87,6 +87,7 @@ document.addEventListener('mousedown', resetGame);
 function endGame() {
   const { body } = document;
   body.style.opacity = 0.5;
+  body.style.cursor = "pointer";
 
   isGameOver = true;
   const gameOver = document.getElementById('gameOver');
@@ -185,7 +186,6 @@ function moveDot() {
 
   const [collides, stick] = collidesWithStick(dotX, dotY);
   if (stick === null) return;
-  stick.style.outline = 'none';
   let [vertical, horizontal] = getDirections(dot);
   if (collides) {
     if (stick.id.startsWith(activeStick)) {
@@ -268,17 +268,22 @@ function moveDot() {
 
 /**
  * This function determines which stick to move according to the mouse position
+ * It also sets which stick is active for highlighting purposes
  * @param {number} x The x position of the mouse
  * @returns {HTMLElement | null} The stick that is on the side of the mouse
  */
 function getStick(x) {
+  const leftStick = document.getElementById('leftStick');
+  const rightStick = document.getElementById('rightStick');
+  leftStick.style.outline = 'none';
+  rightStick.style.outline = 'none';
+  
   if (x < window.innerWidth / 2) {
-    if (activeStick === "right") activeStick = "left";
-    const leftStick = document.getElementById('leftStick');
+    activeStick = "left";
     return leftStick;
   }
-  if (activeStick === "left") activeStick = "right";
-  const rightStick = document.getElementById('rightStick');
+  
+  activeStick = "right";
   return rightStick;
 }
 
