@@ -8,6 +8,8 @@ const maxDistance = 6;
 const scoreIncrement = 2;
 let scoreDecrement = 1;
 
+window.onload = () => { setHighestScore(); }
+
 /**
  * This function gets the highest score from the local storage and displays it
  * @returns {void}
