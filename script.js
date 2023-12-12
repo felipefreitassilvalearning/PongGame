@@ -299,6 +299,8 @@ function moveSticks(e) {
   const stick = getStick(x);
   if (stick === null) return;
 
+  stick.style.outline = 'none';
+  stick.style.padding = '0';
   if (stick.id.startsWith(activeStick)) {
     stick.style.outline = '1px solid #ccc';
     stick.style.padding = '2px';
