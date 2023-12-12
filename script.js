@@ -34,6 +34,7 @@ function resetGame() {
 
   setHighestScore();
 
+  distance = 1;
   scoreDecrement = 1;
 
   isGameOver = false;
