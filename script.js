@@ -186,12 +186,12 @@ function moveDot() {
 
   const [collides, stick] = collidesWithStick(dotX, dotY);
   if (stick === null) return;
+  if (stick.id.startsWith(activeStick)) {
+    stick.style.outline = '2px solid red';
+  }
+
   let [vertical, horizontal] = getDirections(dot);
   if (collides) {
-    if (stick.id.startsWith(activeStick)) {
-      stick.style.outline = '2px solid green';
-    }
-    
     score.innerText = scoreValue + scoreIncrement;
     if (scoreValue + scoreIncrement > highestScore) {
       highestScore = scoreValue + scoreIncrement;
@@ -212,10 +212,6 @@ function moveDot() {
       stick.style.height = stickHeight * 0.9 + 'px';
     }
   } else {
-    if (stick.id.startsWith(activeStick)) {
-      stick.style.outline = '2px solid red';
-    }
-
     const tooFarLeft = dotX <= 0;
     const tooFarRight = dotX + dot.offsetWidth >= window.innerWidth;
     const tooFarTop = dotY <= 0;
@@ -275,8 +271,12 @@ function moveDot() {
 function getStick(x) {
   const leftStick = document.getElementById('leftStick');
   const rightStick = document.getElementById('rightStick');
-  leftStick.style.outline = 'none';
-  rightStick.style.outline = 'none';
+  
+  if (activeStick === "left") {
+    rightStick.style.outline = 'none';
+  } else if (activeStick === "right") {
+    leftStick.style.outline = 'none';
+  }
   
   if (x < window.innerWidth / 2) {
     activeStick = "left";
