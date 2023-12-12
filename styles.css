@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+body {
+    cursor: none;
+}
+
 .main {
     width: 100vw;
     height: 100vh;
